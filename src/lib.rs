@@ -25,12 +25,13 @@
 #![deny(clippy::cast_sign_loss)] // Disallows sign loss during casting.
 
 /// Module for handling database operations.
-mod database;
+pub mod database;
 
 /// Module for handling errors within the application.
-mod error;
-
+pub mod error;
+/// Module for defining application models.
+pub mod model;
 /// Module for handling server logic.
 pub mod server;
 /// Module for maintaining application state.
-mod state;
+pub mod state;
