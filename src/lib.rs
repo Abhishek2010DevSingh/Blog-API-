@@ -26,9 +26,10 @@
 
 /// Module for handling database operations.
 pub mod database;
-
 /// Module for handling errors within the application.
 pub mod error;
+/// Module for defining routes and request handlers.
+pub mod handler;
 /// Module for defining application models.
 pub mod model;
 /// Module for handling server logic.

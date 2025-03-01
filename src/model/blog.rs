@@ -21,8 +21,8 @@ pub struct BlogPost {
     pub tags: Vec<String>,
 
     /// Timestamp when the blog post was created.
-    pub created_at: DateTime<Utc>,
+    pub created_at: Option<DateTime<Utc>>,
 
     /// Timestamp when the blog post was last updated.
-    pub updated_at: DateTime<Utc>,
+    pub updated_at: Option<DateTime<Utc>>,
 }
