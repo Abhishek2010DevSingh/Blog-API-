@@ -1,21 +1,26 @@
-use axum::{Json, http::StatusCode};
-use serde::{Deserialize, Serialize};
-
 use crate::{database::extractor::DatabaseConnection, error::AppError, model::blog::BlogPost};
+use axum::{Json, http::StatusCode};
+use axum_valid::Valid;
+use serde::{Deserialize, Serialize};
+use validator::Validate;
 
 /// Represents the request body for creating a new blog post.
-#[derive(Debug, Serialize, Deserialize)]
+#[derive(Debug, Serialize, Deserialize, Validate)]
 pub struct BlogPostBody {
     /// Title of the blog post.
+    #[validate(length(min = 1, message = "Title cannot be empty"))]
     pub title: String,
 
     /// Content of the blog post.
+    #[validate(length(min = 1, message = "Content cannot be empty"))]
     pub content: String,
 
     /// Category to which the blog post belongs.
+    #[validate(length(min = 1, message = "Category cannot be empty"))]
     pub category: String,
 
     /// List of tags associated with the blog post.
+    #[validate(length(min = 1, message = "At least one tag is required"))]
     pub tags: Vec<String>,
 }
 
@@ -46,7 +51,7 @@ pub struct BlogPostBody {
 /// ```
 pub async fn create_post(
     DatabaseConnection(mut conn): DatabaseConnection,
-    Json(payload): Json<BlogPostBody>,
+    Valid(payload): Valid<Json<BlogPostBody>>,
 ) -> Result<(StatusCode, Json<BlogPost>), AppError> {
     let value = sqlx::query_as!(
         BlogPost,

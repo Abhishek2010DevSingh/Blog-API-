@@ -6,6 +6,7 @@ edition = "2024"
 [dependencies]
 anyhow = "1.0.96"
 axum = { version = "0.8.1", features = ["macros"] }
+axum-valid = { version = "0.23.0", features = ["json"] }
 chrono = { version = "0.4.40", features = ["serde"] }
 dotenv = "0.15.0"
 serde = { version = "1.0.218", features = ["derive"] }
