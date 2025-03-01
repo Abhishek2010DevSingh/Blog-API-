@@ -8,5 +8,10 @@ pub async fn db_connect() -> anyhow::Result<sqlx::Pool<sqlx::Postgres>> {
         .await
         .context("Failed to connect to Postgres")?;
 
+    sqlx::migrate!()
+        .run(&pool)
+        .await
+        .context("Failed to run migrations")?;
+
     Ok(pool)
 }
