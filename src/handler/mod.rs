@@ -6,5 +6,7 @@ pub mod delete;
 pub mod list;
 /// It have get method for reading a blog post by id.
 pub mod read;
+/// It have get method for searching blog posts.
+pub mod search;
 /// It have put method for updating a blog post by id.
 pub mod update;

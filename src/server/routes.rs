@@ -1,7 +1,7 @@
 use crate::{
     handler::{
         create::create_post, delete::delete_by_id, list::find_all, read::find_by_id,
-        update::update_by_id,
+        search::search_posts, update::update_by_id,
     },
     state::AppState,
 };
@@ -45,6 +45,7 @@ pub fn setup_routes(state: AppState) -> Router {
     Router::new()
         .route("/", get(|| async { "Hello, World!" }))
         .route("/posts", post(create_post).get(find_all))
+        .route("/posts/search", get(search_posts))
         .route(
             "/posts/{id}",
             get(find_by_id).put(update_by_id).delete(delete_by_id),
