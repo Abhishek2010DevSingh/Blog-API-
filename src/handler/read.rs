@@ -1,6 +1,6 @@
 use crate::model::blog::BlogPost;
 use crate::{database::extractor::DatabaseConnection, error::AppError};
-use axum::{Json, extract::Path};
+use axum::{extract::Path, Json};
 
 /// Retrieves a blog post by its ID from the database.
 ///
