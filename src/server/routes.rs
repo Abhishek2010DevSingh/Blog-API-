@@ -1,7 +1,10 @@
-use crate::{handler::create::create_post, state::AppState};
+use crate::{
+    handler::{create::create_post, read::find_by_id},
+    state::AppState,
+};
 use axum::{
-    routing::{get, post},
     Router,
+    routing::{get, post},
 };
 use tower_http::trace::TraceLayer;
 
@@ -39,6 +42,7 @@ pub fn setup_routes(state: AppState) -> Router {
     Router::new()
         .route("/", get(|| async { "Hello, World!" }))
         .route("/posts", post(create_post))
+        .route("/posts/{id}", get(find_by_id))
         .layer(TraceLayer::new_for_http())
         .with_state(state)
 }
