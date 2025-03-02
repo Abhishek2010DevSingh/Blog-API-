@@ -33,8 +33,7 @@ pub async fn find_by_id(
         .fetch_optional(&mut *conn)
         .await?;
 
-    match value {
-        Some(post) => Ok(Json(post)),
-        None => Err(AppError::NotFound("Blog post not found".to_string())),
-    }
+    value
+        .map(Json)
+        .ok_or_else(|| AppError::NotFound("Blog post not found".to_string()))
 }
