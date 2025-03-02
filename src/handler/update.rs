@@ -59,10 +59,10 @@ pub async fn update_by_id(
         &payload.tags,
         id
     )
-    .fetch_one(&mut *conn)
-    .await
-    .map(Json)
-    .map_err(|_| AppError::NotFound("Blog post not found".into()))?;
+    .fetch_optional(&mut *conn)
+    .await?;
 
-    Ok(updated_post)
+    updated_post
+        .map(Json)
+        .ok_or_else(|| AppError::NotFound("Blog post not found".to_string()))
 }

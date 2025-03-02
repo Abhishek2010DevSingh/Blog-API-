@@ -1,5 +1,8 @@
 use crate::{
-    handler::{create::create_post, delete::delete_by_id, list::find_all, read::find_by_id},
+    handler::{
+        create::create_post, delete::delete_by_id, list::find_all, read::find_by_id,
+        update::update_by_id,
+    },
     state::AppState,
 };
 use axum::{
@@ -42,7 +45,10 @@ pub fn setup_routes(state: AppState) -> Router {
     Router::new()
         .route("/", get(|| async { "Hello, World!" }))
         .route("/posts", post(create_post).get(find_all))
-        .route("/posts/{id}", get(find_by_id).delete(delete_by_id))
+        .route(
+            "/posts/{id}",
+            get(find_by_id).put(update_by_id).delete(delete_by_id),
+        )
         .layer(TraceLayer::new_for_http())
         .with_state(state)
 }
