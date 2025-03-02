@@ -28,13 +28,13 @@ use axum::{extract::Path, Json};
 pub async fn find_by_id(
     DatabaseConnection(mut conn): DatabaseConnection,
     Path(id): Path<i32>,
-) -> Result<Json<Option<BlogPost>>, AppError> {
+) -> Result<Json<BlogPost>, AppError> {
     let value = sqlx::query_as!(BlogPost, "SELECT * FROM blog_posts WHERE id = $1", id)
         .fetch_optional(&mut *conn)
         .await?;
 
     match value {
-        Some(post) => Ok(Json(Some(post))),
+        Some(post) => Ok(Json(post)),
         None => Err(AppError::NotFound("Blog post not found".to_string())),
     }
 }
